@@ -4,11 +4,11 @@
         <div class="form-group">
             <input class="form-control" type="text" placeholder="Tasks filter..." ng-model="taskFilter.title">
         </div>
-        <button ng-controller="CreateTaskModalController" class="btn btn-primary" ng-click="open()">Create new task</button>
+        <button class="btn btn-primary" ng-click="open()">Create new task</button>
     </form>       
 </nav>
 <ul>
-    <li ng-repeat="task in tasks | filter:taskFilter" class="task">
+    <li ng-repeat="task in tasks | filter:taskFilter | orderBy:reverse" class="task">
         <div class="panel panel-default">
             <form editable-form name="taskForm" onaftersave="updateTask(task)">
                 <div class="form-group panel-heading task-padding">
@@ -20,12 +20,6 @@
                 <div class="form-group task-padding">
                     <p class="task-padding" editable-text="task.attached" e-ng-model="selectedUser" e-typeahead="user for user in users | filter:$viewValue">Attached: {{ task.attached.join(", ") }}</p>
                 </div>
-                
-                
-<!--                <div class="form-group task-padding">
-                    <input type="text" ng-model="selectedUser" typeahead="user for user in users | filter:$viewValue" class="form-control">
-                </div>
-                -->
                 <div class="panel-footer clearfix">
                     <div class="pull-right">
 
@@ -50,7 +44,7 @@
         </div>
     </li>
 </ul>
-<h4 class="newtask-title">Create new task</h4>
+<!--<h4 class="newtask-title">Create new task</h4>
 <form>
     <div class="form-group">
         <input class="form-control" type="text" placeholder="Task title..." ng-model="taskTitle">
@@ -61,27 +55,4 @@
     <div class="form-group">
         <input class="btn btn-primary" type="submit" value="Create task" ng-click="createNewTask(taskTitle, taskContent)">
     </div>
-</form>
-
-<div ng-controller="CreateTaskModalController">
-    <script type="text/ng-template" id="myModalContent.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Create new task</h3>
-        </div>
-        <div class="modal-body">
-<!--            <ul>
-                <li ng-repeat="item in items">
-                    <a ng-click="selected.item = item">{{ item }}</a>
-                </li>
-            </ul>
-            Selected: <b>{{ selected.item }}</b>-->
-            <div class="form-group"><input type="text" class="form-control" ng-model="taskTitle"></div>
-            <div class="form-group"><input type="text" class="form-control" ng-model="taskContent"></div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" ng-click="ok(taskTitle, taskContent)">OK</button>
-            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
-        </div>
-    </script>
-
-</div>
+</form>-->

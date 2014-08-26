@@ -1,6 +1,6 @@
 (function() {
     
-    var TasksController = function($scope, tasksFactory, $http, $location, $modal, $log) {
+    var TasksController = function($scope, tasksFactory, $http, $modal, $log) {
         
         $scope.open = function (size) {
             var modalInstance = $modal.open({
@@ -15,44 +15,26 @@
         modalInstance.result.then(function (newTask) {
                 $scope.tasks.unshift(newTask);
             }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
+//                $log.info('Modal dismissed at: ' + new Date());
             });
         };
   
-        $scope.editTask = function(taskId) {
-            $location.path("/tasks/" + taskId + "/edit");
-        };
-        
-        $scope.createNewTask = function(title, taskContent) {
-            
-            var newTask = {
-                title: title,
-                content: taskContent
-            };
-            
-            $http.post("tasks/new", newTask)
-                .success(function (data) {
-                    $scope.tasks.push(data);
-                }); 
-        };
-         
+        // Update task
+        $scope.updateTask = tasksFactory.updateTask;
+
         // Delete task
         $scope.deleteTask = function (taskId) {
-            $http.delete("/tasks/delete/" + taskId)
-                .success(function() {
-                   init();
-            });
-            
-        };
-        
-        // Update task
-        $scope.updateTask = function (editedTask) {
-            $http.put("/tasks/" + editedTask._id + "/update", editedTask)
-                .success(function (task) {
-                    init();
+            tasksFactory.deleteTask(taskId).success(function(data) {
+                var delTask = _.find($scope.tasks, function (task, index) {
+                    if (task._id === taskId) {
+                        $scope.tasks.splice(index, 1);
+                    }
+                    return task._id === taskId;
                 });
+            });    
         };
-        
+ 
+
         function init() {
             tasksFactory.getTasks()
                 .success(function(tasks) { 
@@ -70,17 +52,9 @@
         
     };
     
-    var ModalInstanceController = function($scope, $modalInstance, $http, tasksFactory) {
+    var ModalInstanceController = function($scope, $modalInstance, tasksFactory) {
 
-            $scope.createTask = function(taskTitle, taskContent) {
-                var newTask = {
-                    title: taskTitle,
-                    content: taskContent
-                };
-                $http.post("/tasks/new", newTask).success(function (data) {
-                    console.log($scope.tasks);
-                });
-            };
+            $scope.createTask = tasksFactory.createTask;
 
             $scope.ok = function (taskTitle, taskContent) {
                 tasksFactory.createTask(taskTitle, taskContent)
@@ -95,8 +69,8 @@
 
         };
         
-    ModalInstanceController.$inject = ["$scope", "$modalInstance", "$http", "tasksFactory"];
-    TasksController.$inject = ["$scope", "tasksFactory", "$http", "$location", "$modal", "$log"];
+    ModalInstanceController.$inject = ["$scope", "$modalInstance", "tasksFactory"];
+    TasksController.$inject = ["$scope", "tasksFactory", "$http", "$modal", "$log"];
     
     angular.module("tasksModule").controller("TasksController", TasksController);
     

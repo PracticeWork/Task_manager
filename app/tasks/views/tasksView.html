@@ -8,7 +8,7 @@
     </form>       
 </nav>
 <ul>
-    <li ng-repeat="task in tasks | filter:taskFilter | orderBy:reverse" class="task">
+    <li ng-repeat="task in tasks | filter:taskFilter" class="task">
         <div class="panel panel-default">
             <form editable-form name="taskForm" onaftersave="updateTask(task)">
                 <div class="form-group panel-heading task-padding">
@@ -25,7 +25,7 @@
 
                         <button type="button" class="btn btn-primary btn-sm" ng-click="taskForm.$show()" ng-show="!taskForm.$visible">Edit</button>
                         
-                        <button class="btn btn-danger btn-sm" ng-click="deleteTask(task._id)" ng-show="!taskForm.$visible">Delete</button>
+                        <button type="button" class="btn btn-danger btn-sm" ng-click="deleteTask(task._id)" ng-show="!taskForm.$visible">Delete</button>
                         
                         <span ng-show="taskForm.$visible">
                             <button type="submit" class="btn btn-primary btn-sm" ng-disabled="taskForm.$waiting">
@@ -44,15 +44,3 @@
         </div>
     </li>
 </ul>
-<!--<h4 class="newtask-title">Create new task</h4>
-<form>
-    <div class="form-group">
-        <input class="form-control" type="text" placeholder="Task title..." ng-model="taskTitle">
-    </div>
-    <div class="form-group">
-        <textarea rows="5" class="form-control" type="text" placeholder="Task content..." ng-model="taskContent"></textarea>
-    </div>
-    <div class="form-group">
-        <input class="btn btn-primary" type="submit" value="Create task" ng-click="createNewTask(taskTitle, taskContent)">
-    </div>
-</form>-->

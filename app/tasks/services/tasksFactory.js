@@ -1,7 +1,9 @@
 (function() {
     
-    var tasksFactory = function ($http) {
+    var tasksFactory = function ($http, $location) {
+        
         return {
+            
             getTasks: function() {
                 return $http.get("/tasks");
             },
@@ -11,11 +13,18 @@
                     content: taskContent
                 };
                 return $http.post("/tasks/new", newTask);
+            },
+            updateTask: function (editedTask) {
+                return $http.put("/tasks/" + editedTask._id + "/update", editedTask);
+            },
+            deleteTask: function (taskId) {
+                return $http.delete("/tasks/delete/" + taskId);
             }
+            
         }; 
     };
     
-    tasksFactory.$inject = ["$http"];
+    tasksFactory.$inject = ["$http", "$location"];
     
     angular.module("tasksModule").factory("tasksFactory", tasksFactory);
     

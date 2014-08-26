@@ -1,6 +1,6 @@
 (function() {
     
-    var tasksFactory = function ($http, $location) {
+    var tasksFactory = function ($http) {
         
         return {
             
@@ -24,7 +24,7 @@
         }; 
     };
     
-    tasksFactory.$inject = ["$http", "$location"];
+    tasksFactory.$inject = ["$http"];
     
     angular.module("tasksModule").factory("tasksFactory", tasksFactory);
     

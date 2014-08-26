@@ -10,15 +10,15 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.age }}</td>
+        <tr class="table-users">
+            <td editable-text="user.name">{{ user.name }}<span class="glyphicon glyphicon-pencil edit"></span></td>
+            <td editable-text="user.email">{{ user.email }}<span class="glyphicon glyphicon-pencil edit"></span></td>
+            <td editable-text="user.age">{{ user.age }}<span class="glyphicon glyphicon-pencil edit"></span></td>
         </tr>
     </tbody>
 
 </table>
-<div class="pull-left">
+<!--<div class="pull-left">
     <button class="btn btn-sm btn-primary" ng-click="editUser(user.name, user._id)">Edit User</button>
     <button class="btn btn-sm btn-primary" ng-click="deleteUser(user._id)">Delete User</button>
-</div>
+</div>-->

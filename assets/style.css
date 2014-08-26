@@ -48,9 +48,6 @@ textarea {
 .panel-heading {
     background-color: #f5f5f5;
 }
-/*.panel-heading, .panel-body {
-    cursor: pointer;
-}*/
 .task-padding {
     padding: 10px;
 }
@@ -63,3 +60,18 @@ textarea {
 .attached-users > li {
     float: left;
 }
+.editable-text {
+    margin-top: 10px;
+}
+.editable-click, a.editable-click {
+    text-decoration: none;
+    color: #428bca;
+    border-bottom: none;
+}
+.table-users span.edit {
+    margin-left: 10px;
+
+}
+.table-users td:hover {
+    cursor: pointer;
+} 

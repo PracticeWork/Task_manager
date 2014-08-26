@@ -2,13 +2,13 @@
     
     var usersFactory = function($http) {
         
-        var factory = {};
-        
-        factory.getUsers = function() {
-            return $http.get("/users");
+        return {
+            
+            getUsers: function() {
+                return $http.get("/users");
+            }
+            
         };
-        
-        return factory;
         
     };
     

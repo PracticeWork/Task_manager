@@ -19,6 +19,16 @@
             },
             deleteTask: function (taskId) {
                 return $http.delete("/tasks/delete/" + taskId);
+            },
+            createComment: function(taskId, commentContent) {
+                var newComment = {
+                    content: commentContent,
+                    task_id: taskId
+                };
+                return $http.post("/tasks/"  + taskId + "/comments", newComment);
+            },
+            getComments: function() {
+                $http.get("/");
             }
             
         }; 

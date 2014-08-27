@@ -41,6 +41,14 @@
                     </div>
                 </div>
             </form>
+            <div>
+                <h4>Comments:</h4>
+                <div class="form-group">
+                    <textarea rows="7" class="form-control" ng-model="commentContent"></textarea>
+                </div>
+                
+                <p><a href="" ng-click="createComment(task._id, commentContent)">Leave a comment</a></p>
+            </div>
         </div>
     </li>
 </ul>

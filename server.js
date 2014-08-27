@@ -23,17 +23,47 @@ mongoose.connect("mongodb://localhost/task_manager");
 var UserSchema = new mongoose.Schema({
     name: String,
     email: String,
-    age :Number
+    age :Number,
+    created_at:String
 }),
-    Users = mongoose.model("Users", UserSchema);
-
-var TaskSchema = new mongoose.Schema({
+    Users = mongoose.model("Users", UserSchema),
+    
+    TaskSchema = new mongoose.Schema({
     title: String,
     created_at: String,
     content: String,
     attached: Array
 }),
-    Tasks = mongoose.model("Tasks", TaskSchema);
+    Tasks = mongoose.model("Tasks", TaskSchema),
+    
+    CommentSchema = new mongoose.Schema({
+        task_id: String,
+        user_id: String,
+        content: String,
+        created_at: String
+    }),
+    Comments = mongoose.model("Comments", CommentSchema);
+    
+// Get comments
+app.get("/tasks/:taskId/comments", function(req, res) {
+    Comments.find({task_id: req.params.taskId}, function (err, docs) {
+        console.log(docs);
+        res.json(docs);
+    });
+});
+
+// Create comment
+app.post("/tasks/:taskId/comments", function (req, res) {
+    var b = req.body;
+
+    new Comments({
+        content: b.content,
+        task_id: b.task_id,
+        created_at: new Date().valueOf()
+    }).save(function (err, docs) {
+        res.json(docs);
+    });
+});
     
     
 // Get tasks list

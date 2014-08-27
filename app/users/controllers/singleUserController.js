@@ -1,17 +1,11 @@
 (function() {
     
-    var SingleUserController = function($scope, $http, $routeParams, $location) {
+    var SingleUserController = function($scope, $http, $routeParams, usersFactory) {
+
+        $scope.deleteUser = usersFactory.deleteUser;
         
-        $scope.deleteUser = function(userId) {
-            $http.delete("/users/delete/" + userId)
-                    .success(function () {
-                        $location.path("/users");
-                    });
-        };
+        $scope.updateUser = usersFactory.updateUsers;
         
-        $scope.editUser = function(userName, userId) {
-            $location.path("/users/" + userName + "/" + userId + "/edit");
-        };
         
         $http.get("/users/" + $routeParams.userId)
                 .success(function (user) {
@@ -20,7 +14,7 @@
         
     };
     
-    SingleUserController.$inject = ["$scope", "$http", "$routeParams", "$location"];
+    SingleUserController.$inject = ["$scope", "$http", "$routeParams", "usersFactory"];
     
     angular.module("usersModule").controller("SingleUserController", SingleUserController);
     

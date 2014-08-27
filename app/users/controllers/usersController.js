@@ -5,7 +5,7 @@
         $scope.users = [];
         $scope.predicate = "name";
         $scope.sort = true;
-        
+
         function init() {
             usersFactory.getUsers()
                     .success(function(users) {

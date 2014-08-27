@@ -18,7 +18,10 @@
 //                $log.info('Modal dismissed at: ' + new Date());
             });
         };
-  
+        
+        //Create comment
+        $scope.createComment = tasksFactory.createComment;
+        
         // Update task
         $scope.updateTask = tasksFactory.updateTask;
 
@@ -40,6 +43,9 @@
                 .success(function(tasks) { 
                     $scope.tasks = tasks;
                 });
+                
+                
+                
                     
             $http.get("/users")
                 .success(function (users) {

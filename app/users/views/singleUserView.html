@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default">
     <p class="navbar-text">User: <strong>{{ user.name }}</strong></p>      
 </nav>
-<table class="table">
+<table class="table ">
     <thead>
         <tr>
             <th>Name:</th>
@@ -11,13 +11,16 @@
     </thead>
     <tbody>
         <tr class="table-users">
-            <td editable-text="user.name">{{ user.name }}<span class="glyphicon glyphicon-pencil edit"></span></td>
-            <td editable-text="user.email">{{ user.email }}<span class="glyphicon glyphicon-pencil edit"></span></td>
-            <td editable-text="user.age">{{ user.age }}<span class="glyphicon glyphicon-pencil edit"></span></td>
+            <td class="col-md-3" onaftersave="updateUser(user)" editable-text="user.name" show-on-hover>{{ user.name }}<span class="glyphicon glyphicon-pencil hidden"></span></td>
+            <td class="col-md-3" onaftersave="updateUser(user)" editable-text="user.email" show-on-hover>{{ user.email }}<span class="glyphicon glyphicon-pencil hidden"></span></td>
+            <td class="col-md-3" onaftersave="updateUser(user)" editable-text="user.age" show-on-hover>{{ user.age }}<span class="glyphicon glyphicon-pencil hidden"></span></td>
         </tr>
     </tbody>
 
 </table>
+<p>
+    <button type="button" class="btn btn-sm btn-warning" ng-click="deleteUser(user._id)">Delete</button>
+</p>
 <!--<div class="pull-left">
     <button class="btn btn-sm btn-primary" ng-click="editUser(user.name, user._id)">Edit User</button>
     <button class="btn btn-sm btn-primary" ng-click="deleteUser(user._id)">Delete User</button>

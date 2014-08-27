@@ -68,10 +68,18 @@ textarea {
     color: #428bca;
     border-bottom: none;
 }
+
 .table-users span.edit {
     margin-left: 10px;
+    display: none;
 
+}
+.table-users td {
+    position: relative;
 }
 .table-users td:hover {
     cursor: pointer;
 } 
+.table-users td span {
+    margin-left: 10px;
+}

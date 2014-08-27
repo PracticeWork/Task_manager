@@ -36,6 +36,10 @@
                     controller: "EditTaskController",
                     templateUrl: "app/tasks/views/editTaskView.html"
                 })
+                .when("/tasks/:taskId", {
+                    controller: "SingleTaskController",
+                    templateUrl:"app/tasks/views/singleTaskView.html"
+                })
                 .otherwise({redirectTo: "/"});
     });
     

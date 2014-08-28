@@ -19,11 +19,6 @@
             });
         };
         
-        //Create comment
-        $scope.createComment = tasksFactory.createComment;
-        
-        // Update task
-        $scope.updateTask = tasksFactory.updateTask;
 
         // Delete task
         $scope.deleteTask = function (taskId) {

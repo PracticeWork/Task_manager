@@ -8,9 +8,9 @@
         
         
         $http.get("/users/" + $routeParams.userId)
-                .success(function (user) {
-                    $scope.user = user;
-                });
+            .success(function (user) {
+                $scope.user = user;
+            });
         
     };
     

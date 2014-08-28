@@ -83,3 +83,11 @@ textarea {
 .table-users td span {
     margin-left: 10px;
 }
+.comment {
+    margin-bottom: 20px;
+    background-color: #ddd;
+    border: 1px solid black;
+}
+.comment-content {
+    margin-bottom: 10px;
+}

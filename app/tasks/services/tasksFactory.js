@@ -1,6 +1,6 @@
 (function() {
     
-    var tasksFactory = function ($http) {
+    var tasksFactory = function ($http, $routeParams) {
         
         return {
             
@@ -29,12 +29,18 @@
             },
             getComments: function() {
                 $http.get("/");
+            },
+            getSingleTask: function () {
+                return $http.get("/tasks/" + $routeParams.taskId);
+            },
+            getTaskComments: function () {
+                return $http.get("/tasks/" + $routeParams.taskId + "/comments");
             }
             
         }; 
     };
     
-    tasksFactory.$inject = ["$http"];
+    tasksFactory.$inject = ["$http", "$routeParams"];
     
     angular.module("tasksModule").factory("tasksFactory", tasksFactory);
     

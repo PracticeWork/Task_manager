@@ -2,18 +2,20 @@
     
     var NewUserController = function($scope, $http,  $location) {
         
-        $scope.createNewUser = function(name, email, age) {
+        $scope.createNewUser = function(name, email, age, password) {
             
             var newUser = {
                 name: name,
                 email: email,
-                age: age
+                age: age,
+                password: password
             };
             
             $http.post("/users/new", newUser)
-                    .success(function (data) {
-                        $location.path("/users");  
-                    });
+                .success(function (data) {
+                    $location.path("/users");
+                    console.log(data);
+                });
             
         };
     };

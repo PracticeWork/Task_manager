@@ -22,6 +22,19 @@ ul {
 textarea {
    resize: none;
 }
+/*.assigned input{
+    width: 40%;
+}*/
+/*.form-control {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    box-shadow: none;
+    border-radius: 0;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #ddd;
+} */
 .header {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 20px;

@@ -24,7 +24,8 @@ var UserSchema = new mongoose.Schema({
     name: String,
     email: String,
     age :Number,
-    created_at:String
+    created_at:String,
+    password: String
 }),
     Users = mongoose.model("Users", UserSchema),
     
@@ -32,7 +33,8 @@ var UserSchema = new mongoose.Schema({
     title: String,
     created_at: String,
     content: String,
-    attached: Array
+    due_date: String,
+    assigned: Object
 }),
     Tasks = mongoose.model("Tasks", TaskSchema),
     
@@ -47,7 +49,6 @@ var UserSchema = new mongoose.Schema({
 // Get comments
 app.get("/tasks/:taskId/comments", function(req, res) {
     Comments.find({task_id: req.params.taskId}, function (err, docs) {
-        console.log(docs);
         res.json(docs);
     });
 });
@@ -82,7 +83,8 @@ app.post("/tasks/new", function (req, res) {
         title: b.title,
         created_at: new Date().valueOf(),
         content: b.content,
-        attached: ["Nick", "Vasya"]
+        assigned: b.assigned,
+        due_date: b.due_date.valueOf()
     }).save(function (err, docs) {
         res.json(docs);
     });
@@ -105,7 +107,7 @@ app.put("/tasks/:taskId/update", function (req, res) {
         title: b.title,
         content: b.content,
         created_at: new Date().valueOf(),
-        attached: b.attached
+        assigned: b.assigned
     }, function (err, docs) {
         res.json(docs);
     });
@@ -126,6 +128,13 @@ app.get("/users", function (req, res) {
     });  
 });
 
+// Get user by login
+app.get("/users/:userName/:password", function (req, res) {
+    Users.find({name: req.params.userName, password: req.params.password}, function (err, docs) {
+        res.json(docs[0]);
+    });
+});
+
 // Get single user
 app.get("/users/:userId", function (req, res) {
     Users.find({_id: req.params.userId}, function (err, docs) {
@@ -141,7 +150,8 @@ app.post("/users/new", function (req, res) {
     new Users({
         name: b.name,
         email: b.email,
-        age: b.age
+        age: b.age,
+        password: b.password
     }).save(function(err, docs) {
         res.json(docs);
     });

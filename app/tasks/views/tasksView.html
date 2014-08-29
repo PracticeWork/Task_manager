@@ -1,5 +1,10 @@
 <nav class="navbar navbar-default">
-    <p class="navbar-text"><strong>Tasks list</strong></p>
+    <p class="navbar-text">
+        <button class="btn btn-default btn-sm" ng-click="predicate = 'title'; reverse = !reverse; sort = !sort" >
+            <span ng-class="{'glyphicon-chevron-up': sort, 'glyphicon-chevron-down': !sort}"class="glyphicon"></span>
+            <strong>Tasks</strong>
+        </button>
+    </p>
     <form class="navbar-form navbar-right">
         <div class="form-group">
             <input class="form-control" type="text" placeholder="Tasks filter..." ng-model="taskFilter.title">
@@ -8,7 +13,7 @@
     </form>       
 </nav>
 <ul>
-    <li ng-repeat="task in tasks | filter:taskFilter" class="task">
+    <li ng-repeat="task in tasks | filter:taskFilter | orderBy:predicate:reverse" class="task">
         <div class="panel panel-default">
             <div class="form-group panel-heading task-padding">
                 <div><a href="#/tasks/{{ task._id }}">{{ task.title }}</a></div>

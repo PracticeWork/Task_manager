@@ -7,10 +7,12 @@
             getTasks: function() {
                 return $http.get("/tasks");
             },
-            createTask: function(taskTitle, taskContent) {
+            createTask: function(taskTitle, taskContent, assignedTo, dueDate) {
                 var newTask = {
                     title: taskTitle,
-                    content: taskContent
+                    content: taskContent,
+                    assigned: assignedTo,
+                    due_date: dueDate
                 };
                 return $http.post("/tasks/new", newTask);
             },

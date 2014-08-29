@@ -12,6 +12,10 @@
                     controller: "UsersController",
                     templateUrl: "app/users/views/usersView.html"
                 })
+                .when("/login", {
+                    controller: "AuthController",
+                    templateUrl: "app/loginView.html"
+                })
                 .when("/users", {
                     controller: "UsersController",
                     templateUrl: "app/users/views/usersView.html"

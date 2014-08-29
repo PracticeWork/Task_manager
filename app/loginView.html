@@ -1,0 +1,17 @@
+
+<nav class="navbar navbar-default">
+    <p class="navbar-text"><strong>Sign In</strong></p>      
+</nav>
+<form ng-submit="logIn(login, password)">
+    <label for="user-login">Log In:</label>
+    <div class="form-group">
+        <input id="user-login" class="form-control" type="text" placeholder="User log in..." ng-model="login">
+    </div>
+    <label for="user-password">Password:</label>
+    <div class="form-group">
+        <input id="user-password" class="form-control" type="password" placeholder="User password..." ng-model="password">
+    </div>
+    <div class="form-group">
+        <input class="btn btn-primary" type="submit" value="Submit">
+    </div>
+</form>

@@ -1,11 +1,11 @@
 (function() {
     
-    var SingleTaskController = function($scope, $http, $routeParams, tasksFactory) {
+    var SingleTaskController = function($scope, $http, $routeParams, tasksFactory, $location, usersFactory) {
         $scope.taskComments = [];
         
+
         $scope.createComment = function(taskId, commentContent) {
             tasksFactory.createComment(taskId, commentContent).success(function(data) {
-                console.log(data);
                 $scope.taskComments.push(data);
                 $scope.commentContent = "";
             });
@@ -17,12 +17,7 @@
         // Delete task
         $scope.deleteTask = function (taskId) {
             tasksFactory.deleteTask(taskId).success(function(data) {
-                var delTask = _.find($scope.tasks, function (task, index) {
-                    if (task._id === taskId) {
-                        $scope.tasks.splice(index, 1);
-                    }
-                    return task._id === taskId;
-                });
+                $location.path("/tasks");
             });    
         };
         
@@ -35,6 +30,10 @@
                 .success(function(data) {
                     $scope.taskComments = data;
                 });
+            usersFactory.getUsers().success(function (data) {
+                $scope.users = data;
+            });
+            
                 
             
         }
@@ -43,7 +42,7 @@
   
     };
     
-    SingleTaskController.$inject = ["$scope", "$http", "$routeParams", "tasksFactory"];
+    SingleTaskController.$inject = ["$scope", "$http", "$routeParams", "tasksFactory", "$location", "usersFactory"];
     
     angular.module("tasksModule").controller("SingleTaskController", SingleTaskController);
     

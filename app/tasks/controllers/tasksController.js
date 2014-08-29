@@ -1,6 +1,11 @@
 (function() {
     
     var TasksController = function($scope, tasksFactory, $http, $modal, $log) {
+
+        
+        
+        $scope.predicate = "title";
+        $scope.sort = true;
         
         $scope.open = function (size) {
             var modalInstance = $modal.open({
@@ -53,24 +58,75 @@
         
     };
     
-    var ModalInstanceController = function($scope, $modalInstance, tasksFactory) {
+    var ModalInstanceController = function($scope, $modalInstance, tasksFactory, usersFactory) {
+        
+        function init() {
+            usersFactory.getUsers()
+                .success(function (data) {
+                    //var x = _.pluck(data, "name");
+                    $scope.users = data;
+                });
+        }
 
-            $scope.createTask = tasksFactory.createTask;
+        init();
 
-            $scope.ok = function (taskTitle, taskContent) {
-                tasksFactory.createTask(taskTitle, taskContent)
-                    .success(function (data) {
-                        $modalInstance.close(data);
-                    });
-            };
+        $scope.createTask = tasksFactory.createTask;
 
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
+        $scope.ok = function (taskTitle, taskContent, assignedTo, dueDate) {
+            tasksFactory.createTask(taskTitle, taskContent, assignedTo, dueDate)
+                .success(function (data) {
+                    $modalInstance.close(data);
+                });
+        };
 
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
         };
         
-    ModalInstanceController.$inject = ["$scope", "$modalInstance", "tasksFactory"];
+        // Date picker
+        $scope.today = function() {
+             $scope.dt = new Date();
+        };
+        
+        $scope.today();
+
+        $scope.clear = function () {
+            $scope.dt = null;
+        };
+
+        // Disable weekend selection
+        $scope.disabled = function(date, mode) {
+            return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+        };
+
+        $scope.toggleMin = function() {
+            $scope.minDate = $scope.minDate ? null : new Date();
+        };
+        
+        $scope.toggleMin();
+
+        $scope.openPicker = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.opened = true;
+        };
+        
+        
+        
+        $scope.dateOptions = {
+            formatYear: 'yy',
+            startingDay: 1
+        };
+
+        $scope.initDate = new Date('2016-15-20');
+        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[0];
+
+        
+
+    };
+        
+    ModalInstanceController.$inject = ["$scope", "$modalInstance", "tasksFactory", "usersFactory"];
     TasksController.$inject = ["$scope", "tasksFactory", "$http", "$modal", "$log"];
     
     angular.module("tasksModule").controller("TasksController", TasksController);

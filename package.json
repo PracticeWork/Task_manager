@@ -1,0 +1,17 @@
+{
+    "name": "task_manager",
+    "version": "0.0.1",
+    "description": "",
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "angular-bootstrap": "latest",
+        "angular-xeditable": "latest",
+        "body-parser": "latest",
+        "bootstrap": "latest",
+        "express": "latest",
+        "method-override": "latest",
+        "mongoose": "latest",
+        "underscore": "latest"
+    }
+}

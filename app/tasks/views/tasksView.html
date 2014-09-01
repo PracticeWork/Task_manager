@@ -1,29 +1,33 @@
-<nav class="navbar navbar-default">
-    <p class="navbar-text">
-        <button class="btn btn-default btn-sm" ng-click="predicate = 'title'; reverse = !reverse; sort = !sort" >
-            <span ng-class="{'glyphicon-chevron-up': sort, 'glyphicon-chevron-down': !sort}"class="glyphicon"></span>
-            <strong>Tasks</strong>
-        </button>
-    </p>
-    <form class="navbar-form navbar-right">
-        <div class="form-group">
+<div class="container">
+    <ul class="form-inline list-inline control-list ">
+        <li>
+            <button class="btn btn-primary" ng-click="predicate = 'title'; reverse = !reverse; sort = !sort" >
+                <span ng-class="{'glyphicon-chevron-up': sort, 'glyphicon-chevron-down': !sort}"class="glyphicon"></span>
+                Tasks
+            </button>
+        </li>
+        <li>
             <input class="form-control" type="text" placeholder="Tasks filter..." ng-model="taskFilter.title">
-        </div>
-        <button class="btn btn-primary" ng-click="open()">Create new task</button>
-    </form>       
-</nav>
-<ul>
-    <li ng-repeat="task in tasks | filter:taskFilter | orderBy:predicate:reverse" class="task">
-        <div class="panel panel-default">
-            <div class="form-group panel-heading task-padding">
-                <div><a href="#/tasks/{{ task._id }}">{{ task.title }}</a>
-                    <span class="pull-right">
-                        {{ task.created_at | date: "MMM dd, yyyy HH:mm:ss" }}
-                        <button class=" btn btn-sm btn-default" ng-click="deleteTask(task._id)">Delete</button>
-                    </span>
-                </div>
-            </div>
-        </div>
+        </li>
+        <li>
+            <button class="btn btn-primary" ng-click="open()">Create task</button>
+        </li>
+    </ul>
+    <hr>
+    <ul class="list-group">
+        <li ng-repeat="task in tasks | filter:taskFilter | orderBy:predicate:reverse" class="list-group-item clearfix">
+            <a style="display: block" href="#/tasks/{{ task._id }}">
+                <span class="badge pull-right"><span class="glyphicon glyphicon-ok " ng-if="isChecked(task)"></span></span>
+                <ul class="list-unstyled task-list-inner">
+                    <li class="clearfix">{{ task.title }}</li>
+                    <li class="clearfix">
+                        <span class="task-list-date label label-default">{{ task.created_at | date: "dd.MM.yyyy" }}</span>
+                        <button class=" btn btn-sm btn-primary pull-right" ng-click="deleteTask($event, task._id)">Delete</button>
+                    </li>
+                    
+                </ul> 
+            </a>
+        </li>
         
-    </li>
-</ul>
+    </ul>
+</div>

@@ -36,7 +36,8 @@ var UserSchema = new mongoose.Schema({
         content: String,
         due_date: Date,
         assigned: Object,
-        owner_name: String
+        owner_name: String,
+        status: Number //0 - represents uncompleted task status, 4 - is for completed
 }),
     Tasks = mongoose.model("Tasks", TaskSchema),
     
@@ -98,7 +99,8 @@ app.post("/tasks/new", function (req, res) {
                     created_at: new Date().valueOf(),
                     content: b.content,
                     assigned: b.assigned,
-                    due_date: b.due_date.valueOf()
+                    due_date: b.due_date.valueOf(),
+                    status: 0
                 }).save(function (err, docs) {
                     res.json(docs);
                 });
@@ -112,7 +114,6 @@ app.post("/tasks/new", function (req, res) {
 // Get single task
 app.get("/tasks/:taskId", function (req, res) {
     Tasks.find({_id: req.params.taskId}, function (err, docs) {
-//        console.log(docs[0].created_by);
        res.json(docs[0]);
     });
 });
@@ -126,8 +127,10 @@ app.put("/tasks/:taskId/update", function (req, res) {
         title: b.title,
         content: b.content,
         created_at: new Date().valueOf(),
-        assigned: b.assigned
+        assigned: b.assigned,
+        status: b.status
     }, function (err, docs) {
+        console.log(b);
         res.json(docs);
     });
 
@@ -170,7 +173,8 @@ app.post("/users/new", function (req, res) {
         name: b.name,
         email: b.email,
         age: b.age,
-        password: b.password
+        password: b.password,
+        created_at: new Date().valueOf()
     }).save(function(err, docs) {
         res.json(docs);
     });

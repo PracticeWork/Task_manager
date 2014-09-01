@@ -1,53 +1,41 @@
-<nav class="navbar navbar-default">
-    <p class="navbar-text"><strong>Tasks {{ task.title }}</strong></p>
-    <form class="navbar-form navbar-right">
-        <!--<button class="btn btn-primary" ng-click="open()">Create new task</button>--><!-- we could add comment here -->
-    </form>       
-</nav>
 <div class="panel panel-default">
-    <form editable-form name="taskForm" onaftersave="updateTask(task, assignedUserName)">
+    <form editable-form name="taskForm" onaftersave="updateTask(task)">
         <div class="form-group panel-heading task-padding">
-            <div editable-text="task.title">{{ task.title }}</div>
+            <div editable-text="task.title"><strong>{{ task.title }}</strong><span ng-if="isChecked()" class="glyphicon glyphicon-ok pull-right checked-task-color"></span></div>
         </div>
         <div class="form-group task-padding">
-            <div class="panel-body" editable-textarea="task.content" e-cols="99" e-rows="4">{{ task.content }}</div>
+            <div class="panel-body" editable-textarea="task.content" e-cols="200" e-rows="8">{{ task.content }}</div>
         </div>
         <div class="form-group task-padding">
             <label for="task-assigned">Assigned:</label>
             <div class="input-group col-md-5">
                 <p id="task-assigned" editable-text="task.assigned" e-typeahead="user as user.name for user in users | filter:{name:$viewValue} | limitTo:8">{{ task.assigned.name }}</p>
-
             </div>
-
-            <p class="task-padding">
-                Due date: {{ task.due_date | date: "MMM dd, yyyy" }}<br>
-                Author: <strong>{{ task.owner_name }}</strong>
-            </p>
-            <p>Completed: <input type="checkbox"></p>
+            <p class=""><strong>Due date:</strong><br> {{ task.due_date | date: "MMM dd, yyyy" }}</p>
+            <p><label for="completed-check">Completed:</label> <input id="completed-check" type="checkbox" ng-checked="isChecked()" ng-click="switchStatus()"></p>
         </div>
         <div class="panel-footer clearfix">
             <div class="pull-right">
 
-                <button type="button" class="btn btn-primary btn-sm" ng-click="taskForm.$show()" ng-show="!taskForm.$visible">Edit</button>
+                <button type="button" class="btn btn-primary " ng-click="taskForm.$show()" ng-show="!taskForm.$visible">Edit</button>
 
-                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteTask(task._id)" ng-show="!taskForm.$visible">Delete</button>
+                <button type="button" class="btn btn-danger " ng-click="deleteTask(task._id)" ng-show="!taskForm.$visible">Delete</button>
 
                 <span ng-show="taskForm.$visible">
-                    <button type="submit" class="btn btn-primary btn-sm" ng-disabled="taskForm.$waiting">
+                    <button type="submit" class="btn btn-primary " ng-disabled="taskForm.$waiting">
                         Save
                     </button>
-                    <button type="button" class="btn btn-default btn-sm" ng-disabled="taskForm.$waiting" ng-click="taskForm.$cancel()">
+                    <button type="button" class="btn btn-warning " ng-disabled="taskForm.$waiting" ng-click="taskForm.$cancel()">
                         Cancel
                     </button>
                 </span>
             </div>
             <div class="pull-left task-info">
-                <p>{{ task.created_at | date: "MMM dd, yyyy HH:mm:ss" }}</p>
+                <p><strong>Author:</strong> {{ task.owner_name }} <span class="label label-default">{{ task.created_at | date: "MMM dd, yyyy HH:mm:ss" }}</span></p>
             </div>
         </div>
     </form>
-    <div>
-        <h4>Comments:</h4>
+    <div class="task-comments">
         <div >
             <ul >
                 <li class="comment" ng-repeat="comment in taskComments">
@@ -63,6 +51,6 @@
             <textarea rows="7" class="form-control" ng-model="commentContent"></textarea>
         </div>
 
-        <p><button class="btn btn-sm btn-primary" type="button" ng-click="createComment(task._id, commentContent)">Leave a comment</button></p>
+        <p><button class="btn btn-primary" type="button" ng-click="createComment(task._id, commentContent)">Leave a comment</button></p>
     </div>
 </div>

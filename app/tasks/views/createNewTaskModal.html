@@ -1,4 +1,5 @@
 <div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
     <h3 class="modal-title">New task</h3>
 </div>
 <div class="modal-body">
@@ -6,7 +7,9 @@
     <div class="form-group"><input type="text" id="task-title" class="form-control" ng-model="taskTitle" autofocus></div>
     <label for="task-content">Description:</label>
     <div class="form-group"><textarea rows="7" type="text" id="task-content" class="form-control" ng-model="taskContent"></textarea></div>
-    <pre>Model: {{assignedTo | json}}</pre>
+    <div class="pull-left">
+        
+    </div>
     <label for="task-due-date">Due date:</label>
     <div class="input-group col-md-5">
         <input type="text" class="form-control" datepicker-popup="{{ format }}" ng-model="dt" is-open="$parent.opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
@@ -16,10 +19,13 @@
             </button>
         </span>
     </div>
+
     <label for="task-assigned">Assigned:</label>
     <div class="input-group col-md-5">
         <input class="form-control" typeahead="user as user.name for user in users | filter:{name:$viewValue} | limitTo:8" type="text" id="task-assigned" ng-model="assignedTo">
     </div>
+    
+        
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="ok(taskTitle, taskContent, assignedTo, dt)">OK</button>

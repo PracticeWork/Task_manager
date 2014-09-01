@@ -1,19 +1,23 @@
-<nav class="navbar navbar-default">
-    <p class="navbar-text">
-        <button class="btn btn-default btn-sm" ng-click="predicate = 'name'; reverse = !reverse; sort = !sort" >
-            <span ng-class="{'glyphicon-chevron-up': sort, 'glyphicon-chevron-down': !sort}"class="glyphicon"></span>
-            <strong>Users list</strong>
-        </button>
-    </p>
-    <form class="navbar-form navbar-right">
-        <div class="form-group">
+<div class="container">
+    <ul class="form-inline list-inline control-list ">
+        <li>
+            <button class="btn btn-primary" ng-click="predicate = 'name'; reverse = !reverse; sort = !sort" >
+                <span ng-class="{'glyphicon-chevron-up': sort, 'glyphicon-chevron-down': !sort}"class="glyphicon"></span>
+                Users list
+            </button>
+        </li>
+        <li>
             <input class="form-control" type="text" placeholder="Users filter..." ng-model="usersFilter.name">
             <a href="#/users/new" class="btn btn-primary">Create New User</a>
-        </div>
-    </form>
-</nav>
-<ul class="list-group">
-    <li class="list-group-item" ng-repeat="user in users | filter: usersFilter | orderBy:predicate:reverse">
-        <a href="#/users/{{ user.name }}/{{ user._id }}">{{ user.name }} {{ user.created_at }}</a>
-    </li>
-</ul>
+        </li>
+    </ul>
+    <hr>
+    <ul class="list-group">
+        <li class="list-group-item" ng-repeat="user in users | filter: usersFilter | orderBy:predicate:reverse">
+            <a href="#/users/{{ user.name }}/{{ user._id }}">{{ user.name }}
+                <span class="label label-default pull-right">{{ user.created_at | date: "dd.MM.yyyy" }}</span>
+            </a>
+            
+        </li>
+    </ul>
+</div>

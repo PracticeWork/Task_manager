@@ -26,7 +26,8 @@
         
 
         // Delete task
-        $scope.deleteTask = function (taskId) {
+        $scope.deleteTask = function ($event, taskId) {
+            $event.preventDefault();
             tasksFactory.deleteTask(taskId).success(function(data) {
                 var delTask = _.find($scope.tasks, function (task, index) {
                     if (task._id === taskId) {
@@ -42,6 +43,9 @@
             tasksFactory.getTasks()
                 .success(function(tasks) { 
                     $scope.tasks = tasks;
+                    $scope.isChecked = function (task) {
+                        return task.status === 4;
+                    };
                 });
                        
             $http.get("/users")
@@ -71,6 +75,7 @@
         $scope.ok = function (taskTitle, taskContent, assignedTo, dueDate) {
             tasksFactory.createTask(taskTitle, taskContent, assignedTo, dueDate)
                 .success(function (data) {
+                        console.log(data);
                     $modalInstance.close(data);
                 });
         };

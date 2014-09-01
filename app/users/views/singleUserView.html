@@ -1,6 +1,5 @@
-<nav class="navbar navbar-default">
-    <p class="navbar-text">User: <strong>{{ user.name }}</strong></p>      
-</nav>
+<p><strong>Single user view:</strong></p>
+<hr>
 <table class="table ">
     <thead>
         <tr>
@@ -19,7 +18,7 @@
 
 </table>
 <p>
-    <button type="button" class="btn btn-sm btn-warning" ng-click="deleteUser(user._id)">Delete</button>
+    <button type="button" class="btn btn-sm btn-danger" ng-click="deleteUser(user._id)">Delete</button>
 </p>
 <!--<div class="pull-left">
     <button class="btn btn-sm btn-primary" ng-click="editUser(user.name, user._id)">Edit User</button>

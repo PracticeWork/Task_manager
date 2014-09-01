@@ -24,25 +24,28 @@ var UserSchema = new mongoose.Schema({
     name: String,
     email: String,
     age :Number,
-    created_at:String,
+    created_at:Date,
     password: String
 }),
     Users = mongoose.model("Users", UserSchema),
     
     TaskSchema = new mongoose.Schema({
-    title: String,
-    created_at: String,
-    content: String,
-    due_date: String,
-    assigned: Object
+        created_by: String,
+        title: String,
+        created_at: Date,
+        content: String,
+        due_date: Date,
+        assigned: Object,
+        owner_name: String
 }),
     Tasks = mongoose.model("Tasks", TaskSchema),
     
     CommentSchema = new mongoose.Schema({
+        created_by: String,
         task_id: String,
-        user_id: String,
         content: String,
-        created_at: String
+        created_at: Date,
+        owner_name: String
     }),
     Comments = mongoose.model("Comments", CommentSchema);
     
@@ -55,15 +58,23 @@ app.get("/tasks/:taskId/comments", function(req, res) {
 
 // Create comment
 app.post("/tasks/:taskId/comments", function (req, res) {
-    var b = req.body;
-
-    new Comments({
-        content: b.content,
-        task_id: b.task_id,
-        created_at: new Date().valueOf()
-    }).save(function (err, docs) {
-        res.json(docs);
-    });
+    var b = req.body,
+        commentCreator = function (created_by) {
+            Users.find({_id: created_by}, function (err, docs) {
+                new Comments({
+                    owner_name: docs[0].name,
+                    content: b.content,
+                    task_id: b.task_id,
+                    created_at: new Date().valueOf(),
+                    created_by: b.created_by
+                }).save(function (err, docs) {
+                    res.json(docs);
+                });
+            });
+        };
+        commentCreator(b.created_by);
+    
+    
 });
     
     
@@ -77,23 +88,31 @@ app.get("/tasks", function (req, res) {
 // Create task
 app.post("/tasks/new", function (req, res) {
     
-    var b = req.body;
-    
-    new Tasks({
-        title: b.title,
-        created_at: new Date().valueOf(),
-        content: b.content,
-        assigned: b.assigned,
-        due_date: b.due_date.valueOf()
-    }).save(function (err, docs) {
-        res.json(docs);
-    });
-    
+    var b = req.body,
+        TaskCreator = function (created_by) {
+            Users.find({_id: created_by}, function (err, docs) {
+                new Tasks({
+                    created_by: b.created_by,
+                    owner_name: docs[0].name,
+                    title: b.title,
+                    created_at: new Date().valueOf(),
+                    content: b.content,
+                    assigned: b.assigned,
+                    due_date: b.due_date.valueOf()
+                }).save(function (err, docs) {
+                    res.json(docs);
+                });
+            });
+        };
+    TaskCreator(b.created_by);
 });
+
+
 
 // Get single task
 app.get("/tasks/:taskId", function (req, res) {
     Tasks.find({_id: req.params.taskId}, function (err, docs) {
+//        console.log(docs[0].created_by);
        res.json(docs[0]);
     });
 });
@@ -185,33 +204,3 @@ app.delete("/users/delete/:userId", function(req, res) {
 app.listen(8080);
 
 console.log("Express listening on port 8080");
-
-
-// All tasks list
-var tasks = [
-    {
-        title: "Learn git",
-        completed: false,
-        created_at: "22/11/2012",
-        user_id: null,
-        id: 1,
-        comments: [
-            
-        ]
-    },
-    {
-        title: "Learn angularjs",
-        completed: false,
-        created_at: "24/11/2012",
-        user_id: null,
-        id: 2,
-        comments: [
-            {
-                comment_text: "Need more info",
-                user_id: null,
-                created_at: null,
-                id: null
-            }
-        ]
-    }
-];

@@ -12,7 +12,8 @@
                     title: taskTitle,
                     content: taskContent,
                     assigned: assignedTo,
-                    due_date: dueDate
+                    due_date: dueDate,
+                    created_by: localStorage.getItem("loggedUser")   
                 };
                 return $http.post("/tasks/new", newTask);
             },
@@ -25,7 +26,8 @@
             createComment: function(taskId, commentContent) {
                 var newComment = {
                     content: commentContent,
-                    task_id: taskId
+                    task_id: taskId,
+                    created_by: localStorage.getItem("loggedUser")
                 };
                 return $http.post("/tasks/"  + taskId + "/comments", newComment);
             },

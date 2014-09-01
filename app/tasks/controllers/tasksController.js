@@ -1,6 +1,6 @@
 (function() {
     
-    var TasksController = function($scope, tasksFactory, $http, $modal, $log) {
+    var TasksController = function($scope, tasksFactory, $http, $modal) {
 
         
         
@@ -20,7 +20,7 @@
         modalInstance.result.then(function (newTask) {
                 $scope.tasks.unshift(newTask);
             }, function () {
-//                $log.info('Modal dismissed at: ' + new Date());
+
             });
         };
         
@@ -43,10 +43,7 @@
                 .success(function(tasks) { 
                     $scope.tasks = tasks;
                 });
-                
-                
-                
-                    
+                       
             $http.get("/users")
                 .success(function (users) {
                     users = _.pluck(users, "name");
@@ -63,7 +60,6 @@
         function init() {
             usersFactory.getUsers()
                 .success(function (data) {
-                    //var x = _.pluck(data, "name");
                     $scope.users = data;
                 });
         }
@@ -127,7 +123,7 @@
     };
         
     ModalInstanceController.$inject = ["$scope", "$modalInstance", "tasksFactory", "usersFactory"];
-    TasksController.$inject = ["$scope", "tasksFactory", "$http", "$modal", "$log"];
+    TasksController.$inject = ["$scope", "tasksFactory", "$http", "$modal"];
     
     angular.module("tasksModule").controller("TasksController", TasksController);
     

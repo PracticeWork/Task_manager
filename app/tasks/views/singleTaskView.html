@@ -20,8 +20,10 @@
             </div>
 
             <p class="task-padding">
-                Due date: {{ task.due_date | date: "MMM dd, yyyy" }}
+                Due date: {{ task.due_date | date: "MMM dd, yyyy" }}<br>
+                Author: <strong>{{ task.owner_name }}</strong>
             </p>
+            <p>Completed: <input type="checkbox"></p>
         </div>
         <div class="panel-footer clearfix">
             <div class="pull-right">
@@ -50,6 +52,7 @@
             <ul >
                 <li class="comment" ng-repeat="comment in taskComments">
                     <div class="comment-content">{{ comment.content }}</div>
+                    <div>Author: {{ comment.owner_name }}</div>
                     <div>{{ comment.created_at | date: "MMM dd, yyyy HH:mm:ss" }}</div>
                 </li>
 

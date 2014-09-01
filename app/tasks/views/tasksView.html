@@ -16,8 +16,14 @@
     <li ng-repeat="task in tasks | filter:taskFilter | orderBy:predicate:reverse" class="task">
         <div class="panel panel-default">
             <div class="form-group panel-heading task-padding">
-                <div><a href="#/tasks/{{ task._id }}">{{ task.title }}</a></div>
+                <div><a href="#/tasks/{{ task._id }}">{{ task.title }}</a>
+                    <span class="pull-right">
+                        {{ task.created_at | date: "MMM dd, yyyy HH:mm:ss" }}
+                        <button class=" btn btn-sm btn-default" ng-click="deleteTask(task._id)">Delete</button>
+                    </span>
+                </div>
             </div>
         </div>
+        
     </li>
 </ul>
